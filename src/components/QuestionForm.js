@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function QuestionForm(props) {
+function QuestionForm({ onAddQuestion }) {
   const [formData, setFormData] = useState({
     prompt: "",
     answer1: "",
@@ -43,6 +43,16 @@ function QuestionForm(props) {
     .then(resp => resp.json())
     .then(data => onAddQuestion(data))
     .catch(err => console.error("Error creating a new question", err));
+
+    // Clear out the form fields after submission
+    setFormData({
+      prompt: "",
+      answer1: "",
+      answer2: "",
+      answer3: "",
+      answer4: "",
+      correctIndex: 0,
+    })
   }
 
   return (

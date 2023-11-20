@@ -1,19 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import QuestionItem from "./QuestionItem";
 
-function QuestionList() {
-  const [questions, setQuestions] = useState([]);
-
-  // Fetch GET request
-  useEffect(() => {
-    fetch('http://localhost:4000/questions')
-    .then(resp => resp.json())
-    .then(question => setQuestions(question))
-  }, [])
+function QuestionList( {
+    questions, 
+    onDeleteQuestion, 
+    onUpdateQuestion} 
+  ) {
+  // Create question components.
+  const questionComponents = questions.map((question) => {
+    return (
+        <QuestionItem 
+          key={question.id} 
+          question={question} 
+          onDeleteQuestion={onDeleteQuestion}
+          onUpdateQuestion={onUpdateQuestion}
+        />
+    )
+  });
 
   return (
     <section>
       <h1>Quiz Questions</h1>
-      <ul>{/* display QuestionItem components here after fetching */}</ul>
+      <ul>{questionComponents}</ul>
     </section>
   );
 }
